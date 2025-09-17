@@ -75,20 +75,7 @@ def message_results():
 @app.route('/calculator')
 def calculator():
     """Shows the user a form to enter 2 numbers and an operation."""
-    return """
-    <form action="/calculator_results" method="GET">
-        Please enter 2 numbers and select an operator.<br/><br/>
-        <input type="number" name="operand1">
-        <select name="operation">
-            <option value="add">+</option>
-            <option value="subtract">-</option>
-            <option value="multiply">*</option>
-            <option value="divide">/</option>
-        </select>
-        <input type="number" name="operand2">
-        <input type="submit" value="Submit!">
-    </form>
-    """
+    return render_template('calculator_form.html')
 
 @app.route('/calculator_results')
 def calculator_results():
@@ -96,18 +83,25 @@ def calculator_results():
     operand1_int = int(request.args.get('operand1'))
     operand2_int = int(request.args.get('operand2'))
     operator = request.args.get('operation')
+    
     if operator == "add":
         result = operand1_int + operand2_int
-        return f'You chose to add {operand1_int} and {operand2_int}. Your result is: {result}'
     elif operator == "subtract":
         result = operand1_int - operand2_int
-        return f'You chose to subtract {operand1_int} and {operand2_int}. Your result is: {result}'
     elif operator == "multiply":
         result = operand1_int * operand2_int
-        return f'You chose to multiply {operand1_int} and {operand2_int}. Your result is: {result}'
     else:
         result = operand1_int / operand2_int
-        return f'You chose to divide {operand1_int} and {operand2_int}. Your result is: {result}'
+
+    context = {
+        "operand1_int": operand1_int,
+        "operand2_int": operand2_int,
+        "operator": operator,
+        "result": result,
+    }
+    return render_template("calculator_results.html", **context)
+
+
 
 HOROSCOPE_PERSONALITIES = {
     'aries': 'Adventurous and energetic',
