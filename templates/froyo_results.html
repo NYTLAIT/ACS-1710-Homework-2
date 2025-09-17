@@ -5,11 +5,11 @@
     </head>
     <body>
         <!-- Your HTML code goes here! -->
+        {% if not users_froyo_toppings %}
+            <p>You ordered {{users_froyo_flavor}} flavored Fro-Yo!</p>
+        {% else %}
+            <p>You ordered {{users_froyo_flavor}} flavored Fro-Yo with {{users_froyo_toppings}}!</p>
+        {% endif %}
 
-
-
-
-
-        
     </body>
 </html>
